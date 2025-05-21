@@ -8,5 +8,9 @@ app = Flask(__name__, static_url_path='', static_folder='static')
 def home():
     return render_template('about.html')
 
+@app.route('/city')
+def citypage():
+    return render_template('city.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
