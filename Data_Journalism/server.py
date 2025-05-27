@@ -12,5 +12,9 @@ def home():
 def citypage():
     return render_template('city.html')
 
+@app.route('/zip')
+def zip():
+    return render_template('zip.html')
+
 if __name__ == '__main__':
     app.run(debug=True)
