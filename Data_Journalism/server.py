@@ -41,37 +41,6 @@ def citypage():
         X=borough_lightness.get("X", 50)   #Bronx
     )
 
-'''
-@app.route('/manhattan')
-def manhattanpage():
-    with open("Data_Journalism/data/parks_by_borough.json") as f:
-        data = json.load(f)
-    return render_template("manhattan.html", zip_acreage=data["M"])
-
-@app.route('/bronx')
-def bronxpage():
-    with open("Data_Journalism/data/parks_by_borough.json") as f:
-        data = json.load(f)
-    return render_template("bronx.html", zip_acreage=data["X"])
-
-@app.route('/queens')
-def queenspage():
-    with open("Data_Journalism/data/parks_by_borough.json") as f:
-          data = json.load(f)
-    return render_template("queens.html", zip_acreage=data["Q"])
-
-@app.route('/statenisland')
-def statenislandpage():
-    with open("Data_Journalism/data/parks_by_borough.json") as f:
-        data = json.load(f)
-    return render_template("staten_island.html", zip_acreage=data["R"])
-
-@app.route('/brooklyn')
-def brooklynpage():
-    with open("Data_Journalism/data/parks_by_borough.json") as f:
-        data = json.load(f)
-    return render_template("brooklyn.html", zip_acreage=data["B"])
-'''
 @app.route('/borough/<name>')
 def borough_page(name): 
     with open("Data_Journalism/data/parks_by_borough.json") as f:
