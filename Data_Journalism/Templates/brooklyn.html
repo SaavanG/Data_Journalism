@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brooklyn Parks by Zipcode</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    {% include 'nav_bar.html' %}
+
+    <div class="container mt-4" style="margin-top: 200px;">
+        <h2>Brooklyn Parks Acreage by ZIP Code</h2>
+        {% set bar_width = 40 %}
+        {% set spacing = 20 %}
+        {% set num_bars = zip_acreage | length %}
+        {% set svg_width = 50 + num_bars * (bar_width + spacing) %}
+        {% set max_height = 350 %}
+        {% set zip_data = zip_acreage.items()|sort %}
+        {% set max_acreage = zip_acreage.values() | max %}
+        {% set total = zip_acreage.values() | sum %}
+
+<svg xmlns="http://www.w3.org/2000/svg" width="{{ svg_width }}" height="450" viewBox="0 0 {{ svg_width }} 450">
+    <style>
+      .axis {
+        stroke: #333;
+        stroke-width: 2;
+      }
+      .grid {
+        stroke: #ccc;
+        stroke-width: 1;
+        opacity: 0.3;
+      }
+      .bar {
+        fill: #4CAF50;
+        cursor: pointer;
+      }
+      .label {
+        font-size: 12px;
+        text-anchor: middle;
+        fill: #444;
+      }
+      .tick {
+        stroke: #333;
+        stroke-width: 1;
+      }
+      .tick-label {
+        font-size: 10px;
+        text-anchor: end;
+        fill: #333;
+      }
+      .axis-label {
+        font-size: 12px;
+        text-anchor: middle;
+        fill: #333;
+      }
+    </style>
+
+    <line class="axis" x1="50" y1="400" x2="{{ svg_width - 50 }}" y2="400" />
+    <line class="axis" x1="50" y1="0" x2="50" y2="400" />
+
+    <text class="axis-label" x="-80" y="200" transform="rotate(-90, -80, 200)">Park Acreage</text>
+
+    {% set max_val = zip_acreage.values() | max %}
+    {% set num_ticks = 5 %}
+    {% for i in range(num_ticks + 1) %}
+      {% set value = (i / num_ticks) * max_val %}
+      {% set y = 400 - (i / num_ticks) * 350 %}
+      <line class="tick" x1="45" y1="{{ y }}" x2="50" y2="{{ y }}"/>
+      <text class="tick-label" x="43" y="{{ y + 4 }}">{{ "%.1f"|format(value) }}</text>
+    {% endfor %}
+
+    {% for zip, acreage in zip_data %}
+      {% set index = loop.index0 %}
+      {% set scaled_height = (acreage / max_acreage) * max_height %}
+      {% set x = 60 + index * (bar_width + spacing) %}
+      {% set y = 400 - scaled_height %}
+      {% set percent = (acreage / total) * 100 %}
+      <rect class="bar"
+            x="{{ x }}" y="{{ y }}"
+            width="{{ bar_width }}"
+            height="{{ scaled_height }}"
+            data-zip="{{ zip }}"
+            data-acreage="{{ '%.1f' | format(acreage) }}"
+            data-percent="{{ '%.1f' | format(percent) }}"
+            onmouseover="showInfo(this)"
+            onmouseout="clearInfo()" />
+      <text class="label" x="{{ x + bar_width / 2 }}" y="425">{{ zip }}</text>
+    {% endfor %}
+</svg>
+
+        <p id="zip-info" style="font-size: 16px; text-align: center; margin-top: 15px;"></p>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+    <script>
+        function showInfo(el) {
+            const zip = el.getAttribute("data-zip");
+            const acreage = parseFloat(el.getAttribute("data-acreage"));
+            const percent = parseFloat(el.getAttribute("data-percent"));
+            document.getElementById("zip-info").textContent =
+                `ZIP code ${zip} has ${acreage.toFixed(1)} acres of park, which is ${percent.toFixed(1)}% of Brooklyn's total park acreage.`;
+        }
+
+        function clearInfo() {
+            document.getElementById("zip-info").textContent = "";
+        }
+    </script>
+<footer class="text-center mt-5 p-3 border-top" style="font-size: 14px; color: #000;">
+  <p>
+    This project investigates park space distribution across New York City boroughs using acreage data by ZIP code.
+    Data sourced from the <a href="https://data.cityofnewyork.us/Recreation/Parks-Properties/enfh-gkve/about_data" target="_blank">NYC Parks Properties Dataset</a>.
+  </p>
+</footer>
+
+</body>
+</html>
