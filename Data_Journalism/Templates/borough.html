@@ -20,7 +20,7 @@
         {% set zip_data = zip_acreage.items()|sort %}
         {% set max_acreage = zip_acreage.values() | max %}
         {% set total = zip_acreage.values() | sum %}
-
+      
 <svg xmlns="http://www.w3.org/2000/svg" width="{{ svg_width }}" height="450" viewBox="0 0 {{ svg_width }} 450">
     <style>
       .axis {
@@ -60,7 +60,10 @@
     <line class="axis" x1="50" y1="400" x2="{{ svg_width - 50 }}" y2="400" />
     <line class="axis" x1="50" y1="0" x2="50" y2="400" />
 
-    <text class="axis-label" x="-80" y="200" transform="rotate(-90, -80, 200)">Park Acreage</text>
+   
+    <text class="axis-label" x="{{ svg_width // 2 }}" y="450" font-size="20px" >ZIP Codes</text>
+    <text class="axis-label" x="10" y="220" transform="rotate(-90,10,220)" font-size="20px">Park Acreage</text>
+
 
     {% set max_val = zip_acreage.values() | max %}
     {% set num_ticks = 5 %}
@@ -88,7 +91,8 @@
             onmouseout="clearInfo()" />
       <text class="label" x="{{ x + bar_width / 2 }}" y="425">{{ zip }}</text>
     {% endfor %}
-</svg>
+  
+  </svg>
 
         <p id="zip-info" style="font-size: 16px; text-align: center; margin-top: 15px;"></p>
 
