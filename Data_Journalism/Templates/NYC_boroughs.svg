@@ -804,21 +804,23 @@
 </g>
 
 
-<g id="legend">
+<g id="legend" transform="scale(2.5)">
+  <text x="70" y="185" fill="black">Legend(acres)</text>
+  
   <rect x="80" y="200" width="20" height="20" fill="hsl(120, 70%, 85%)"/>
-  <text x="105" y="215" fill="black">85</text>
+  <text x="105" y="215" fill="black">3500</text>
 
   <rect x="80" y="220" width="20" height="20" fill="hsl(120, 70%, 70%)"/>
-  <text x="105" y="235" fill="black">70</text>
+  <text x="105" y="235" fill="black">5500</text>
 
   <rect x="80" y="240" width="20" height="20" fill="hsl(120, 70%, 55%)"/>
-  <text x="105" y="255" fill="black">55</text>
+  <text x="105" y="255" fill="black">7000</text>
 
   <rect x="80" y="260" width="20" height="20" fill="hsl(120, 70%, 40%)"/>
-  <text x="105" y="275" fill="black">40</text>
+  <text x="105" y="275" fill="black">8000</text>
 
   <rect x="80" y="280" width="20" height="20" fill="hsl(120, 70%, 35%)"/>
-  <text x="105" y="295" fill="black">35</text>
+  <text x="105" y="295" fill="black">9000</text>
 </g>
 
 
