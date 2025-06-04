@@ -1,8 +1,6 @@
 from flask import Flask, render_template, request, send_from_directory
 import json
 
-
-
 app = Flask(__name__, static_url_path='', static_folder='static')
 
 
