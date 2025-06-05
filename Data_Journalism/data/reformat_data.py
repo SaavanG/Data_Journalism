@@ -1,6 +1,6 @@
 import json
 
-file = open("data/Parks_Properties_NYC.csv", "r")
+file = open("data/data_cleansed.csv", "r")
 lines = file.readlines()
 
 borough_acreage = {}

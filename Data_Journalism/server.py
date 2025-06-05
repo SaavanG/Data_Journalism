@@ -10,7 +10,7 @@ def home():
 
 @app.route('/city')
 def citypage():
-    with open("Data_Journalism/data/parks_by_borough.json") as f:
+    with open("Data_Journalism/data/data.json") as f:
         data = json.load(f)
 
     borough_totals = {}
@@ -41,7 +41,7 @@ def citypage():
 
 @app.route('/borough/<name>')
 def borough_page(name): 
-    with open("Data_Journalism/data/parks_by_borough.json") as f:
+    with open("Data_Journalism/data/data.json") as f:
         data = json.load(f)
         borough_names = {
         "manhattan": "M",
